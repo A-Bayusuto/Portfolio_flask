@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <img class="my_pic" src="/static/images/profile_pic.jpg" alt="Placeholder Image">
+            <h2>{{ name }}</h1>
+            <h3>{{ job_title }}</h3>
+            <nav>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#education">Education</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="content-container">
+            <div id="about" class="section-container">
+                <h2>About Me</h2>
+                <p>This is the about section.</p>
+            </div>
+            <div id="experience" class="section-container">
+                <h2>Experience</h2>
+                <p>This is the experience section.</p>
+            </div>
+            <div id="projects" class="section-container">
+                <h2>Projects</h2>
+                <p>This is the projects section.</p>
+            </div>
+            <div id="education" class="section-container">
+                <h2>Education</h2>
+                <div class="education-entry">
+                    <img src="path-to-logo.jpg" alt="University Logo" class="education-logo">
+                    <img src="path-to-logo.jpg" alt="University Logo" class="education-logo">
+                    <div class="education-details">
+                        <h3>University Name: University of Indonesia / University of Queensland</h3>
+                        <p>Degree: Bachelor of Science in Computer Science</p>
+                        <p>Time: August 2016 - July 2021</p>
+                    </div>
+                </div>
+                <div class="education-entry">
+                    <img src="path-to-logo.jpg" alt="University Logo" class="education-logo">
+                    <div class="education-details">
+                        <h3>University Name</h3>
+                        <p>Degree: Masters of Science in Data Science and Analytics</p>
+                        <p>Time: September 2022 - Oct 2023</p>
+                        <p>Achievements: Pass with Distinction</p>
+                    </div>
+                </div>
+            </div>
+            <div id="contact" class="contact-container">
+                <div class="info-container">
+                    <h2>Contact Information</h2>
+                    {% if contact_email %}
+                        <p>Email: {{ contact_email }}</p>
+                    {% endif %}
+                    {% if phone_no %}
+                        <p>Phone: {{ phone_no }}</p>
+                    {% endif %}
+                    {% if linkedin %}
+                        <p>LinkedIn: <a href="{{ linkedin }}" target="_blank"><br>{{ linkedin }}</a></p>
+                    {% endif %}
+                    {% if github %}
+                        <p>LinkedIn: <a href="{{ github }}" target="_blank"><br>{{ github }}</a></p>
+                    {% endif %}
+                </div>
+                <div class="form-container">
+                    <h2>Contact</h2>
+                    <form action="/submit-form" method="POST" enctype="multipart/form-data">
+                        <div class="form-field-container">
+                            <div class="email-container">
+                                <label for="email" style="color: black;">Your Email:</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="context-container">
+                                <label for="context" style="color: black;">Email Content:</label>
+                                <textarea id="context" name="context" rows="5" required></textarea>
+                            </div>
+                        </div>
+                        <br><br>
+                        <label for="file">Upload PDF:</label>
+                        <input type="file" id="file" name="file" accept=".pdf">
+                        <br><br>
+                        <button type="submit" class="submit-button">Submit</button>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>
