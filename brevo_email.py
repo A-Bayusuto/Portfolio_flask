@@ -24,6 +24,24 @@ def brevo_send(to_email='bayusuto@gmail.com', to_name="ABM", sender=sender, send
         to=[{'email': to_email, 'name': to_name}],
         sender={'email': sender, 'name': sender_name},
         subject=subject,
+        html_content=f'<html><body><h1>{html_content}</h1></body></html>'
+    )
+
+    try:
+        api_response = api_instance.send_transac_email(send_smtp_email)
+        pprint(api_response)
+    except ApiException as e:
+        print(f"Exception when calling TransactionalEmailsApi->send_transac_email: {e}")
+
+
+def brevo_send_attachment(to_email='bayusuto@gmail.com', to_name="ABM", sender=sender, sender_name=name, subject="test",
+               html_content=body, attachment=None, attachment_name=None):
+    if attachment:
+        attachment_name = attachment_name
+    send_smtp_email = sib_api_v3_sdk.SendSmtpEmail(
+        to=[{'email': to_email, 'name': to_name}],
+        sender={'email': sender, 'name': sender_name},
+        subject=subject,
         html_content=f'<html><body><h1>{html_content}</h1></body></html>',
         attachment=[{'content': attachment, 'name': attachment_name}]
         )

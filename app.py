@@ -27,11 +27,6 @@ def submit_form():
     context = request.form.get('context')
     file = request.files.get('file')  # Get the uploaded file
 
-    # Debugging: Print values to the console (optional, for testing)
-    print(f"Email: {sender_email}")
-    print(f"Context: {context}")
-    print(f"file: {file}")
-
     if file:
         # Save the uploaded file to a directory (e.g., "uploads/")
         upload_folder = 'temp_upload'
@@ -48,12 +43,17 @@ def submit_form():
             html_automated = f"Sent By: {sender_email} \n\n" + context
             encoded_file = base64.b64encode(file_data).decode('utf-8')
 
-            brevo_send(to_email=contact_email, to_name=sender_email ,subject=subject_automated, 
+            brevo_send_attachment(to_email=contact_email, to_name=sender_email ,subject=subject_automated, 
                html_content=html_automated, attachment=encoded_file, attachment_name=file_name)
             print("email successfully sent")
-            
-
-    os.remove(file_path)
+        os.remove(file_path)
+    else:
+        print("Entered Else")
+        subject_automated = "Portofolio Contact " + str(datetime.datetime.now())
+        html_automated = f"Sent By: {sender_email} \n\n" + context
+        brevo_send(to_email=contact_email, to_name=sender_email ,subject=subject_automated, 
+               html_content=html_automated)
+    
     # Add logic here to handle the form data, e.g., send an email or save to the database
     return render_template('index.html', name=my_name, job_title=job_title,
                            contact_email=contact_email, phone_no=phone_no, 
