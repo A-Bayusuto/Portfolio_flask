@@ -274,3 +274,8 @@ a#arrow img:hover {
     background-color: #717171;
   }
   
+  .text-container-main {
+    width: 75%;
+    margin: 0 auto;  
+    text-align: center;
+  }
