@@ -10,7 +10,6 @@
 </head>
 
 <body>
-    <div id="jumpScare"></div>
     <div class="container">
         <div class="sidebar">
             <img class="my_pic" src="/static/images/profile_pic.jpg" alt="Placeholder Image">
@@ -83,18 +82,16 @@
                             </div>
                             <a id="arrow" class="prev" onclick="plusSlides(-1)">
                                 <!-- ❮ -->
-                                <img src="static/images/arrow_left.png" style="width:30px; height:auto;"
-                                    alt="Previous arrow">
-
+                                <img src="static/images/arrow_left.png" style="width:30px; height:auto;" alt="Previous arrow">
+                                
                             </a>
                             <a id="arrow" class="next" onclick="plusSlides(1)">
-                                <img src="static/images/arrow_right.png" style="width:30px; height:auto;"
-                                    alt="Previous arrow">
+                                <img src="static/images/arrow_right.png" style="width:30px; height:auto;" alt="Previous arrow">
                             </a>
                         </div>
                         <br>
                     </div>
-
+                    
                 </div>
 
 
@@ -196,43 +193,5 @@
     </div>
 </body>
 
+
 </html>
-
-<style>
-    #jumpScare {
-        display: none;
-        /* Hidden by default */
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: url("static/images/projects.jpg") no-repeat center center;
-        /* Replace with your image path */
-        background-size: cover;
-        z-index: 9999;
-        /* Ensure it stays above everything */
-    }
-</style>
-
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Set a delay before triggering the jump scare
-        setTimeout(triggerJumpScare, 3000); // Wait for 3 seconds
-    });
-
-    function triggerJumpScare() {
-        const jumpScare = document.getElementById("jumpScare");
-        jumpScare.style.display = "block"; // Show the jump scare overlay
-
-        // Play a scary sound
-        // const screamAudio = new Audio("scarySound.mp3"); // Replace with your actual file path
-        // screamAudio.play();
-
-        // Optionally, hide the jump scare after 5 seconds
-        setTimeout(() => {
-            jumpScare.style.display = "none"; // Hide the overlay
-        }, 5000);
-    }
-</script>

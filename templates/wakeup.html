@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jump Scare Demo</title>
+  <style>
+    /* Ensure the page fills the viewport without scrollbars */
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    /* The jump scare overlay covers the entire viewport */
+    #jumpScare {
+      display: none; /* Initially hidden */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: url('scary.jpg') no-repeat center center;
+      background-size: cover;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+  <!-- Jump scare overlay; replace "scary.jpg" with your scary image -->
+  <div id="jumpScare"></div>
+
+  <!-- Link to the external jump scare script -->
+  <script src="script.js"></script>
+</body>
+</html>

@@ -14,11 +14,30 @@ github = os.getenv('GITHUB')
 if github == "" or "None":
     github = None
 
+rag_folder_path = os.path.join(app.static_folder, 'images', 'rag')
+
+rag_images = [
+    os.path.join('images', 'rag', filename).replace('\\', '/')
+    for filename in os.listdir(rag_folder_path)
+    if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))
+]
+
+landslide_folder_path = os.path.join(app.static_folder, 'images', 'landslide')
+
+landslide_images = [
+    os.path.join('images', 'landslide', filename).replace('\\', '/')
+    for filename in os.listdir(landslide_folder_path)
+    if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))
+]
+
 @app.route('/')
 def home():
+    print(rag_images)
+    print(landslide_images)
     return render_template('index.html', name=my_name, job_title=job_title,
                            contact_email=contact_email, phone_no=phone_no, 
-                           linkedin=linkedin, github=github)
+                           linkedin=linkedin, github=github, rag_images=rag_images,
+                           landslide_images=landslide_images)
 
 @app.route('/submit-form', methods=['POST'])
 def submit_form():
@@ -57,7 +76,8 @@ def submit_form():
     # Add logic here to handle the form data, e.g., send an email or save to the database
     return render_template('index.html', name=my_name, job_title=job_title,
                            contact_email=contact_email, phone_no=phone_no, 
-                           linkedin=linkedin, github=github)
+                           linkedin=linkedin, github=github, rag_images=rag_images,
+                           landslide_images=landslide_images)
 
 if __name__ == '__main__':
     app.run(debug=True)
