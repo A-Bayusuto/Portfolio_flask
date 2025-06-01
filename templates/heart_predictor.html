@@ -23,7 +23,8 @@
     <h2 style="text-align: center;">Enter Health Data</h2>
     <form action="/heart_predict" method="post">
         <label for="age">Age (years):</label>
-        <input type="number" name="age" required>
+        <input type="number" id="age" name="age" required>
+
 
         <label for="gender">Gender:</label>
         <select name="gender" required>
@@ -46,11 +47,10 @@
         <input type="number" name="cholesterol_level" required>
 
         <label for="FastingBS">Fasting Blood Sugar:</label>
-        <select name="chestpain" required>
+        <select name="FastingBS" required>
             <option value="Yes">Yes</option>
             <option value="No">No</option>
         </select>
-            
 
         <label for="RestingECG">Resting ECG:</label>
         <select name="RestingECG">
