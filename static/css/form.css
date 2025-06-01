@@ -1,0 +1,49 @@
+        /* Base styling */
+        body {
+        font-family: Arial, sans-serif;
+        margin: 40px;
+        background-color: #121212; /* Dark background for the page */
+        color: #e0e0e0;           /* Light text color */
+        }
+
+        /* Form styled as a box */
+        form {
+        max-width: 400px;
+        margin: auto;
+        background-color: #1e1e1e;  /* Dark background for the form */
+        padding: 20px;             /* Added padding for spacing within the box */
+        border-radius: 8px;        /* Rounded corners */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+        }
+
+        /* Label styling */
+        label {
+        display: block;
+        margin-top: 10px;
+        }
+
+        /* Input and select styling */
+        input, select {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        background-color: #333;    /* Darker background for form fields */
+        color: #e0e0e0;            /* Light text for contrast */
+        border: none;
+        border-radius: 4px;        /* Rounded corners for inputs */
+        }
+
+        /* Button styling */
+        button {
+        margin-top: 15px;
+        padding: 10px;
+        cursor: pointer;
+        background-color: #555;
+        color: #e0e0e0;
+        border: none;
+        border-radius: 4px;
+        }
+
+        button:hover {
+        background-color: #777;
+        }
