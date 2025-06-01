@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Smooth scrolling for navigation links
+  // Smooth scrolling for navigation links remains unchanged.
   document.querySelectorAll(".sidebar a").forEach(anchor => {
     anchor.addEventListener("click", function (event) {
       event.preventDefault();
@@ -10,11 +10,43 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
-})
 
-let slideIndex = 1;
+  // Initialize all slideshow containers independently.
+  const slideshows = document.querySelectorAll('.slideshow-container');
+  slideshows.forEach(container => {
+    // Set initial index for each container
+    container.dataset.slideIndex = 1;
+    const slides = container.querySelectorAll('.mySlides');
+    // Hide all slides initially.
+    slides.forEach(slide => {
+      slide.style.display = "none";
+      slide.style.opacity = 0;
+    });
+    // Show the first slide.
+    showSlides(container, 1);
+    // Start auto-loop for this slideshow
+    setInterval(() => {
+      plusSlides(container, 1);
+    }, 10000);
+  });
 
-// Fade-in: Increase opacity from 0 to 1 over the given duration (milliseconds)
+  // Attach click events to arrow controls for each container.
+  document.querySelectorAll('.prev').forEach(prevArrow => {
+    prevArrow.addEventListener('click', function () {
+      const container = this.closest('.slideshow-container');
+      plusSlides(container, -1);
+    });
+  });
+
+  document.querySelectorAll('.next').forEach(nextArrow => {
+    nextArrow.addEventListener('click', function () {
+      const container = this.closest('.slideshow-container');
+      plusSlides(container, 1);
+    });
+  });
+});
+
+// Fade in: Increase opacity from 0 to 1 over the given duration (milliseconds)
 function fadeIn(element, duration, callback) {
   element.style.opacity = 0;
   element.style.display = "block";
@@ -22,7 +54,6 @@ function fadeIn(element, duration, callback) {
   function animateFadeIn(timestamp) {
     if (!startTime) startTime = timestamp;
     let elapsed = timestamp - startTime;
-    // Calculate new opacity, ensuring it does not exceed 1
     let newOpacity = Math.min(elapsed / duration, 1);
     element.style.opacity = newOpacity;
     if (elapsed < duration) {
@@ -35,14 +66,13 @@ function fadeIn(element, duration, callback) {
   requestAnimationFrame(animateFadeIn);
 }
 
-// Fade-out: Decrease opacity from 1 to 0 over the given duration (milliseconds)
+// Fade out: Decrease opacity from 1 to 0 over the given duration (milliseconds)
 function fadeOut(element, duration, callback) {
   element.style.opacity = 1;
   let startTime = null;
   function animateFadeOut(timestamp) {
     if (!startTime) startTime = timestamp;
     let elapsed = timestamp - startTime;
-    // Calculate new opacity, ensuring it does not drop below 0
     let newOpacity = Math.max(1 - elapsed / duration, 0);
     element.style.opacity = newOpacity;
     if (elapsed < duration) {
@@ -56,38 +86,43 @@ function fadeOut(element, duration, callback) {
   requestAnimationFrame(animateFadeOut);
 }
 
-// Main function to show the desired slide with fade transitions and update the dot navigation
-function showSlides(n) {
-  const slides = document.getElementsByClassName("mySlides");
-  const dots = document.getElementsByClassName("dot");
-
-  // Wrap the slide index if it overflows or underflows
+// Main function to show the desired slide for a given slideshow container with fade transitions
+function showSlides(container, n) {
+  const slides = container.querySelectorAll('.mySlides');
+  // If you have dot navigation for each container, update this selection:
+  const dots = container.querySelectorAll('.dot');
+  
+  let slideIndex = parseInt(container.dataset.slideIndex) || 1;
   if (n > slides.length) {
     slideIndex = 1;
   } else if (n < 1) {
     slideIndex = slides.length;
+  } else {
+    slideIndex = n;
   }
-  const targetIndex = slideIndex - 1;
+  container.dataset.slideIndex = slideIndex;
 
-  // Update dot navigation: remove "active" from all and add it to the current one
-  Array.from(dots).forEach(dot => (dot.className = dot.className.replace(" active", "")));
-  if (dots[targetIndex]) {
-    dots[targetIndex].className += " active";
-  }
-
-  // Find the currently visible slide
-  let currentSlide = null;
-  for (let i = 0; i < slides.length; i++) {
-    if (slides[i].style.display === "block") {
-      currentSlide = slides[i];
-      break;
+  // Update dot navigation if present.
+  if (dots.length) {
+    dots.forEach(dot => dot.classList.remove("active"));
+    if (dots[slideIndex - 1]) {
+      dots[slideIndex - 1].classList.add("active");
     }
   }
-  const targetSlide = slides[targetIndex];
 
-  // If a different slide is visible, fade it out first before fading in the target slide
+  const targetSlide = slides[slideIndex - 1];
+
+  // Identify the currently visible slide, if any.
+  let currentSlide = null;
+  slides.forEach(slide => {
+    if (slide.style.display === "block") {
+      currentSlide = slide;
+    }
+  });
+
+  // Fade transitions: if a different slide is visible, fade it out then fade in the target slide.
   if (currentSlide && currentSlide !== targetSlide) {
-    fadeOut(currentSlide, 1000, function() {
+    fadeOut(currentSlide, 1000, function () {
       fadeIn(targetSlide, 3000);
     });
   } else {
@@ -95,29 +130,8 @@ function showSlides(n) {
   }
 }
 
-// Navigation controls
-function plusSlides(n) {
-  showSlides(slideIndex += n);
+// Navigation controls: move to the next or previous slide for the given container.
+function plusSlides(container, n) {
+  let currentIndex = parseInt(container.dataset.slideIndex) || 1;
+  showSlides(container, currentIndex + n);
 }
-
-function currentSlide(n) {
-  showSlides(slideIndex = n);
-}
-
-// Auto-loop: Move to the next slide every 5 seconds
-function autoLoopSlides() {
-  setInterval(() => {
-    plusSlides(1);
-  }, 10000);
-}
-
-// On window load, hide all slides, show the first slide, and start auto-looping
-window.onload = function() {
-  const slides = document.getElementsByClassName("mySlides");
-  for (let i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
-    slides[i].style.opacity = 0;
-  }
-  showSlides(slideIndex);
-  autoLoopSlides();
-};
