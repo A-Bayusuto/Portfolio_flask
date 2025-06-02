@@ -2,15 +2,12 @@ from flask import Flask, request, render_template
 from brevo_email import *
 from dotenv import load_dotenv
 import os
-from sklearn.preprocessing import StandardScaler
 import pandas as pd
-import numpy as np
 import joblib
-from tensorflow.keras.models import load_model
 
 
 app = Flask(__name__)
-
+load_dotenv()
 my_name = os.getenv('MY_NAME')
 job_title = os.getenv('JOB_TITLE')
 contact_email = os.getenv('CONTACT_EMAIL')
@@ -47,7 +44,6 @@ print(numerical_features)
 scaler = joblib.load(r'models\scaler.pkl')
 rf_model = joblib.load(r'models\rf_model.pkl')
 xgb_model = joblib.load(r'models\xgb_model.pkl')
-nn_model = load_model(r'models\keras_model.h5')
 
 @app.route('/')
 def home():
@@ -189,11 +185,7 @@ def predict():
             counter_0 += 1
         else: 
             counter_1 += 1
-        y_pred = [0] if nn_model.predict(t) < 0.5 else [1]
-        if y_pred == [0]:
-            counter_0 += 1
-        else: 
-            counter_1 += 1
+        
         if counter_0 > counter_1:
             return 0
         else:
