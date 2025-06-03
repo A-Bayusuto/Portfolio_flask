@@ -33,17 +33,9 @@ landslide_images = [
     if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))
 ]
 
-file_path = r'Dataset\heart.csv'
-data = pd.read_csv(file_path)
-data = data.dropna()
-numerical_features = list(data.select_dtypes(include=['float64', 'int64']).columns)
-numerical_features.remove('HeartDisease')
-numerical_features.remove('FastingBS')
-print(numerical_features)
 
 scaler = joblib.load(r'models\scaler.pkl')
 rf_model = joblib.load(r'models\rf_model.pkl')
-xgb_model = joblib.load(r'models\xgb_model.pkl')
 
 @app.route('/')
 def home():
@@ -175,11 +167,6 @@ def predict():
     def ensemble_classifier(t):
         counter_0 = 0
         counter_1 = 0
-        y_pred_xg = xgb_model.predict(t)
-        if y_pred_xg == [0]:
-            counter_0 += 1
-        else: 
-            counter_1 += 1
         y_pred_rf = rf_model.predict(t)
         if y_pred_rf == [0]:
             counter_0 += 1
