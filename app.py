@@ -34,8 +34,10 @@ landslide_images = [
 ]
 
 
-scaler = joblib.load(r'models\scaler.pkl')
 rf_model = joblib.load(r'models\rf_model.pkl')
+print("+++++++++++++++++++++++++")
+print(f'rf model: {rf_model.feature_names_in_}')
+print("+++++++++++++++++++++++++")
 
 @app.route('/')
 def home():
@@ -100,9 +102,10 @@ def predict():
     age = data.get('age', age_average)
     if age == '':
         age = age_average
-    gender = data.get('gender', 'M')
+    gender = data.get('gender', 'Male')
+    print("gender:", gender)
     if gender == '':
-        gender = 'M'
+        gender = 'Male'
     chest_pain = data.get('chestpain', "ASY")
     if chest_pain == '':
         chest_pain = 'ASY'
@@ -140,7 +143,7 @@ def predict():
         'MaxHR': maxHR,
         'Oldpeak': oldpeak,
         'ST_Slope': 2 if st_slope == "Up" else (1 if st_slope == "Flat" else 0),
-        'Sex_M': 1 if gender == 'M' else 0,
+        'Sex_M': 1 if gender == 'Male' else 0,
         'ChestPainType_ATA': 1 if chest_pain == "ATA" else 0,
         'ChestPainType_NAP': 1 if chest_pain == "NAP" else 0,
         'ChestPainType_TA': 1 if chest_pain == "TA" else 0,
@@ -152,37 +155,15 @@ def predict():
     print('before scalar transform')
     df_pred = pd.DataFrame([data_row])
     print(df_pred.head())
-    rows_needed = scaler.get_feature_names_out()
-    df_to_transform = df_pred[rows_needed]
-    print(df_to_transform.head())
-    row_pred = scaler.transform(df_to_transform)
-    df_transformed = pd.DataFrame(row_pred, columns=df_to_transform.columns)
 
-    # Add back missing columns from df_pred
-    for col in df_pred.columns:
-        if col not in df_transformed.columns:
-            df_transformed[col] = df_pred[col].values  # Restore excluded columns
+    y_pred_rf = rf_model.predict(df_pred)
 
+    print('y_pred_rf:')
+    print(y_pred_rf)
 
-    def ensemble_classifier(t):
-        counter_0 = 0
-        counter_1 = 0
-        y_pred_rf = rf_model.predict(t)
-        if y_pred_rf == [0]:
-            counter_0 += 1
-        else: 
-            counter_1 += 1
-        
-        if counter_0 > counter_1:
-            return 0
-        else:
-            return 1
-        
-    
-    majority_pred = ensemble_classifier(df_transformed)
 
     output = ""
-    if (majority_pred == 1):
+    if (y_pred_rf == 1):
         output += "You may have a heart problem, please go for a health checkup and consult a doctor.<br><br>"
         output += "Disclaimer: This is just a prediction from inputted data, any missing data can affect the accuracy significantly."
         output += "<br>Missing data is assigned by average or most frequent data"
