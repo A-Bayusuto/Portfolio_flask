@@ -2,8 +2,6 @@ from flask import Flask, request, render_template
 from brevo_email import *
 from dotenv import load_dotenv
 import os
-import pandas as pd
-import joblib
 
 
 app = Flask(__name__)
@@ -32,8 +30,6 @@ landslide_images = [
     for filename in os.listdir(landslide_folder_path)
     if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))
 ]
-
-rf_model = joblib.load(r'models\rf_model.pkl')
 
 @app.route('/')
 def home():
