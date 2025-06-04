@@ -1,7 +1,5 @@
 flask
 sib_api_v3_sdk
 python-dotenv
-pandas
-scikit-learn
 joblib
 gunicorn
