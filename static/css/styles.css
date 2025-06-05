@@ -279,3 +279,17 @@ a#arrow img:hover {
     margin: 0 auto;  
     text-align: center;
   }
+
+.flex-container {
+    display: flex;
+    justify-content: space-between; /* Align elements in a row */
+    gap: 1px; /* Adds spacing between columns */
+}
+
+.education-entry {
+    flex: 1; /* Equal width distribution */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}

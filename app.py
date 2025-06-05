@@ -90,4 +90,4 @@ def submit_form():
                            landslide_images=landslide_images)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
