@@ -15,6 +15,16 @@ github = os.getenv('GITHUB')
 if github == "" or "None":
     github = None
 
+
+# Configure API key authorization: api-key
+configuration = sib_api_v3_sdk.Configuration()
+configuration.api_key['api-key'] = os.getenv('BREVO_API_KEY')
+sender = os.getenv('BREVO_DOMAIN_EMAIL')
+name = os.getenv('BREVO_SENDER_NAME')
+print(configuration.api_key['api-key'])
+print(sender)
+print(name)
+
 rag_folder_path = os.path.join(app.static_folder, 'images', 'rag')
 
 rag_images = [
@@ -50,7 +60,6 @@ def submit_form():
     if file:
         # Save the uploaded file to a directory (e.g., "uploads/")
         upload_folder = 'temp_upload'
-        os.makedirs(upload_folder, exist_ok=True)  # Create folder if it doesn't exist
         file_name = file.filename
         print('filename: ', file_name)
         file_path = os.path.join(upload_folder, file_name)
