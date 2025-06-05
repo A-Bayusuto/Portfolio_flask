@@ -109,11 +109,11 @@ body {
     padding: 20px;
 }
 
-.education-entry:not(:last-child) {
+/* .education-entry:not(:last-child) {
     border-bottom: 3px solid #ddd;
     margin-bottom: 20px; 
     padding-bottom: 10px; 
-}
+} */
 
 
 
