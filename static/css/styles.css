@@ -201,20 +201,22 @@ body {
 
 /* ========================================  */
   
-.portfolio-entry {
-    display: flex; /* Creates the side-by-side layout */
-    align-items: flex-start; /* Aligns items to the top */
-    justify-content: space-between; /* Adds spacing between containers */
+.portfolio-container {
+    display: flex;
+    justify-content: center; /* centers both items */
+    gap: 50px;             /* adjust gap as needed */
+    max-width: 1200px;     /* restrict overall container width */
+    margin: 0 auto;        /* centers the container horizontally */
 }
 
 .portfolio-left, .portfolio-right {
-    flex: 1; /* Ensures equal width for both containers */
-    margin: 10px; /* Adds spacing around the containers */
+    flex: 1;               /* Ensures equal width for both containers */
+    margin: 10px;          /* Adds spacing around each container */
 }
 
 .portfolio-right img {
-    max-width: 100%; /* Keeps images responsive */
-    height: auto; /* Maintains aspect ratio */
+    max-width: 100%;       /* Keeps images responsive */
+    height: auto;          /* Maintains aspect ratio */
 }
 
 .slideshow-container {
