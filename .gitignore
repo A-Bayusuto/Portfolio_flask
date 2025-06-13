@@ -3,6 +3,7 @@ __pycache__/
 p_venv
 *.py[cod]
 *$py.class
+TODO
 
 # C extensions
 *.so
